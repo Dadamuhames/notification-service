@@ -1,0 +1,79 @@
+spring:
+  application:
+    name: notification
+
+  # JPA configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/notification_db
+    username: mark
+    password: root_pass
+    driver-class-name: org.postgresql.Driver
+    tomcat:
+      test-on-borrow: true
+      validation-query: SELECT 1
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 10
+        order_updates: true
+        order_inserts: true
+        format_sql: true
+        generate_statistics: true
+        default_schema: postgres
+
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+    producer:
+      bootstrap-servers: localhost:9092
+      acks: -1
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  # Flyway configuration
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
+    validate-on-migrate: true
+    baseline-version: 0
+    schemas: postgres
+
+  # Email configuration
+  mail:
+    host: smtp.example.com
+    port: 587
+    username: hello@google.com
+    password: your_password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+# External configuration
+payment:
+  gateway: mock
+  currency: USD
+  min-amount: 10.00
+
+# Tomcat configuration
+server:
+  port: 8080
+
+
+logging:
+  config: classpath:log4j2.yml
+
+
