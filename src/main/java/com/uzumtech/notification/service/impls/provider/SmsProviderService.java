@@ -1,4 +1,4 @@
-package com.uzumtech.notification.service.impls;
+package com.uzumtech.notification.service.impls.provider;
 
 import com.uzumtech.notification.dto.event.NotificationEvent;
 import com.uzumtech.notification.service.ProviderService;

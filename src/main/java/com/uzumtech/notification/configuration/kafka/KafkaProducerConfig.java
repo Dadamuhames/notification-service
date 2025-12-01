@@ -1,6 +1,7 @@
-package com.uzumtech.notification.configuration;
+package com.uzumtech.notification.configuration.kafka;
 
 import com.uzumtech.notification.configuration.property.KafkaProperties;
+import com.uzumtech.notification.dto.event.InvoiceEvent;
 import com.uzumtech.notification.dto.event.NotificationEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -34,12 +35,23 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, NotificationEvent> producerFactory() {
+    public ProducerFactory<String, NotificationEvent> notificationProducerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, NotificationEvent> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+    public KafkaTemplate<String, NotificationEvent> kafkaNotificationTemplate() {
+        return new KafkaTemplate<>(notificationProducerFactory());
     }
+
+    @Bean
+    public ProducerFactory<String, InvoiceEvent> invoiceProducerFactory() {
+        return new DefaultKafkaProducerFactory<>(producerConfigs());
+    }
+
+    @Bean
+    public KafkaTemplate<String, InvoiceEvent> kafkaInvoiceTemplate() {
+        return new KafkaTemplate<>(invoiceProducerFactory());
+    }
+
 }

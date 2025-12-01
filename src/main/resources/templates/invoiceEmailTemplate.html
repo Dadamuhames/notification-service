@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${event.date().toLocalDate()}"/>
+</head>
+<body style="font-family: 'Maven Pro', sans-serif; background-color: #f9f9f9; margin: 0; padding: 0;margin-top: 20px;">
+
+<div style="max-width: 800px; margin: 40px auto; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+
+    <div style="padding: 20px; display: flex; align-items: center; border-bottom: 1px solid #eee;">
+        <div>
+            <span style="font-weight: bold; font-size: 20px;">Invoice</span><br>
+            <small style="color: #888;">INV-001</small>
+        </div>
+    </div>
+
+    <div style="padding: 20px;">
+        <table width="100%" style="border-collapse: collapse;">
+            <tr style="color: #aaa; text-transform: uppercase; font-size: 12px;">
+                <td style="padding-bottom: 8px;">To</td>
+                <td style="padding-bottom: 8px;">From</td>
+            </tr>
+            <tr style="font-size: 14px;">
+                <td style="font-weight: bold; vertical-align: top;" th:text="${event.name()}"/>
+                <td style="font-weight: bold; vertical-align: top;">
+                    Notification Service
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid #eee; margin: 0;">
+
+    <div style="padding: 20px;">
+        <table width="100%" style="border-collapse: collapse;">
+            <tr style="color: #aaa; text-transform: uppercase; font-size: 12px;">
+                <td style="padding: 8px 0;">Month</td>
+                <td style="padding: 8px 0; text-align: right;">Price</td>
+                <td style="padding: 8px 0; text-align: right;">Count</td>
+                <td style="padding: 8px 0; text-align: center;">Total</td>
+            </tr>
+            <tr style="font-size: 14px; border-bottom: 1px solid #eee;">
+                <td style="padding: 12px 0;" th:text="${event.date().getMonth()}"/>
+                <td style="padding: 12px 0; text-align: right;" th:text="${priceUsz}"/>
+                <td style="padding: 12px 0; text-align: right;" th:text="${event.sentNotificationCount()}"/>
+                <td style="padding: 12px 0; text-align: center;" th:text="${total}"/>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<hr style="border: none; border-top: 1px solid #eee; margin: 0;">
+
+</body>
+</html>

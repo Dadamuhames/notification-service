@@ -5,8 +5,10 @@ import lombok.Getter;
 @Getter
 public enum ErrorMessages {
     USERNAME_NOT_FOUND("login invalid"),
-    LOGIN_NOT_UNIQUE("login already in use"),
-    TAX_NUMBER_NOT_UNIQUE("taxNumber already in use");
+    LOGIN_OR_TAX_NUMBER_NOT_UNIQUE("login or taxNumber already in use"),
+    EVENT_PUBLISHER_NOT_IMPLEMENTED("Event publisher not implemented"),
+    PRICE_NOT_FOUND("Price not found"),
+    MERCHANT_ID_INVALID("Merchant id invalid");
 
     private final String message;
 

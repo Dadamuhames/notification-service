@@ -51,22 +51,22 @@ spring:
 
   # Email configuration
   mail:
-    host: smtp.example.com
-    port: 587
-    username: hello@google.com
-    password: your_password
+    protocol: smtps
+    host: smtp.yandex.ru
+    port: 465
+    username: dadamuhamedoffs@yandex.ru
+    password: "ogqgitwcxkmmdzvp"
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
 
-# External configuration
-payment:
-  gateway: mock
-  currency: USD
-  min-amount: 10.00
 
 # Tomcat configuration
 server:

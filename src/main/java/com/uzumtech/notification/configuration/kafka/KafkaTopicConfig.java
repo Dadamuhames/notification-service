@@ -1,7 +1,7 @@
-package com.uzumtech.notification.configuration;
+package com.uzumtech.notification.configuration.kafka;
 
 import com.uzumtech.notification.configuration.property.KafkaProperties;
-import com.uzumtech.notification.utils.KafkaConstants;
+import com.uzumtech.notification.constant.KafkaConstants;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
