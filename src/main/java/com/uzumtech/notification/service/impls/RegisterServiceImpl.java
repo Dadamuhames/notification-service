@@ -4,7 +4,7 @@ import com.uzumtech.notification.dto.request.RegistrationRequest;
 import com.uzumtech.notification.dto.response.CommonResponse;
 import com.uzumtech.notification.dto.response.RegistrationResponse;
 import com.uzumtech.notification.entity.MerchantEntity;
-import com.uzumtech.notification.exception.ErrorMessages;
+import com.uzumtech.notification.constant.ErrorMessages;
 import com.uzumtech.notification.exception.MerchantValidationException;
 import com.uzumtech.notification.mapper.MerchantMapper;
 import com.uzumtech.notification.repository.MerchantRepository;
@@ -13,9 +13,7 @@ import com.uzumtech.notification.utils.PasswordUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -23,13 +21,15 @@ import java.util.Map;
 public class RegisterServiceImpl implements RegisterService {
     private final MerchantRepository merchantRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordUtils passwordUtils;
     private final MerchantMapper merchantMapper;
 
     @Override
+    @Transactional
     public CommonResponse<RegistrationResponse> register(final RegistrationRequest request) {
         validateRequest(request);
 
-        String generatedPassword = PasswordUtils.generatePassword();
+        String generatedPassword = passwordUtils.generatePassword();
         String encodedPassword = passwordEncoder.encode(generatedPassword);
 
         MerchantEntity merchant = merchantMapper.requestToEntity(request, encodedPassword);
@@ -40,21 +40,10 @@ public class RegisterServiceImpl implements RegisterService {
 
 
     private void validateRequest(final RegistrationRequest request) {
-        Map<String, ErrorMessages> errorMessages = new HashMap<>();
+        boolean loginOrTaxNumberExists = merchantRepository.existsByLoginOrTaxNumber(request.login(), request.taxNumber());
 
-        boolean loginExists = merchantRepository.existsByLogin(request.login());
-        boolean taxNumberExists = merchantRepository.existsByTaxNumber(request.taxNumber());
-
-        if (loginExists) {
-            errorMessages.put("login", ErrorMessages.LOGIN_NOT_UNIQUE);
-        }
-
-        if (taxNumberExists) {
-            errorMessages.put("taxNumber", ErrorMessages.TAX_NUMBER_NOT_UNIQUE);
-        }
-
-        if (!errorMessages.isEmpty()) {
-            throw new MerchantValidationException(errorMessages);
+        if (loginOrTaxNumberExists) {
+            throw new MerchantValidationException(ErrorMessages.LOGIN_OR_TAX_NUMBER_NOT_UNIQUE);
         }
     }
 }

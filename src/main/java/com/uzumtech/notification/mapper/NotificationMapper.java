@@ -14,6 +14,7 @@ import org.mapstruct.ReportingPolicy;
 public interface NotificationMapper {
 
     @Mapping(target = "merchantId", source = "entity.merchant.id")
+    @Mapping(target = "merchantName", source = "entity.merchant.name")
     NotificationEvent entityToEvent(final NotificationEntity entity);
 
 

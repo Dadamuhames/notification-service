@@ -1,19 +1,18 @@
 package com.uzumtech.notification.exception;
 
+import com.uzumtech.notification.constant.ErrorMessages;
 import lombok.Getter;
-
-import java.util.Map;
 
 @Getter
 public class MerchantValidationException extends RuntimeException {
-    private final Map<String, ErrorMessages> messages;
+    private final ErrorMessages errorMessage;
 
-    public MerchantValidationException(String message, Map<String, ErrorMessages> messages) {
+    public MerchantValidationException(String message, ErrorMessages errorMessage) {
         super(message);
-        this.messages = messages;
+        this.errorMessage = errorMessage;
     }
 
-    public MerchantValidationException(Map<String, ErrorMessages> messages) {
-        this.messages = messages;
+    public MerchantValidationException(ErrorMessages errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }

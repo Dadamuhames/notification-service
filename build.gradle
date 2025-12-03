@@ -55,6 +55,13 @@ dependencies {
         }
     }
 
+    // mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail:4.0.0'
+
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:4.0.0'
+
+    implementation 'org.springframework:spring-webflux:7.0.1'
+
 
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
