@@ -1,4 +1,4 @@
-package com.uzumtech.notification.exception;
+package com.uzumtech.notification.constant;
 
 import lombok.Getter;
 
@@ -8,7 +8,11 @@ public enum ErrorMessages {
     LOGIN_OR_TAX_NUMBER_NOT_UNIQUE("login or taxNumber already in use"),
     EVENT_PUBLISHER_NOT_IMPLEMENTED("Event publisher not implemented"),
     PRICE_NOT_FOUND("Price not found"),
-    MERCHANT_ID_INVALID("Merchant id invalid");
+    MEDIA_TYPE_NOT_SUPPORTED("Media type not supported"),
+    MISSING_HEADER("Missing header exception"),
+    METHOD_NOT_SUPPORTED("Http method not supported"),
+    ACCESS_DENIED("Access denied"),
+    THREAD_INTERRUPTED("Thread interrupted");
 
     private final String message;
 

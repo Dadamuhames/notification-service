@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class KafkaInvoicePublisherService implements KafkaEventPublisherService<InvoiceEvent> {
-    private final KafkaTemplate<String, InvoiceEvent> kafkaInvoiceTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
     public void publish(final InvoiceEvent event) {
-        kafkaInvoiceTemplate.send(KafkaConstants.INVOICE_EMAIL_TOPIC, event);
+        kafkaTemplate.send(KafkaConstants.INVOICE_EMAIL_TOPIC, event);
     }
 }

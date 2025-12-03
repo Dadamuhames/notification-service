@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class FirebaseProviderService implements ProviderService {
+public class FirebaseProviderService implements ProviderService<NotificationEvent> {
     @Override
     public void send(NotificationEvent event) {
 

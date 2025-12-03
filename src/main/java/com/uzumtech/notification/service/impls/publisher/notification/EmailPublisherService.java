@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class EmailPublisherService implements NotificationPublisherService {
-    private final KafkaTemplate<String, NotificationEvent> kafkaNotificationTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
     public void publish(final NotificationEvent event) {
-        kafkaNotificationTemplate.send(KafkaConstants.EMAIL_TOPIC, event);
+        kafkaTemplate.send(KafkaConstants.EMAIL_TOPIC, event);
     }
 
     @Override

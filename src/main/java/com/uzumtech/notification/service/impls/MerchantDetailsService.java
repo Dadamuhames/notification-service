@@ -1,6 +1,6 @@
 package com.uzumtech.notification.service.impls;
 
-import com.uzumtech.notification.exception.ErrorMessages;
+import com.uzumtech.notification.constant.ErrorMessages;
 import com.uzumtech.notification.exception.LoginNotFoundException;
 import com.uzumtech.notification.repository.MerchantRepository;
 import lombok.RequiredArgsConstructor;

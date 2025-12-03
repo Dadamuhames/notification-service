@@ -23,7 +23,6 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     public String getHtmlMessage(InvoiceEvent event) {
         Map<String, Object> model = new HashMap<>();
 
-
         BigDecimal priceUsz = currencyUtils.tiyinToUsz(event.currentPrice());
         BigDecimal total = priceUsz.multiply(BigDecimal.valueOf(event.sentNotificationCount()));
 

@@ -2,7 +2,7 @@ package com.uzumtech.notification.service.impls.publisher.notification;
 
 import com.uzumtech.notification.dto.event.NotificationEvent;
 import com.uzumtech.notification.entity.enums.NotificationType;
-import com.uzumtech.notification.exception.ErrorMessages;
+import com.uzumtech.notification.constant.ErrorMessages;
 import com.uzumtech.notification.exception.EventPublisherNotFoundException;
 import com.uzumtech.notification.service.KafkaEventPublisherService;
 import com.uzumtech.notification.service.NotificationPublisherService;

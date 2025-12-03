@@ -12,4 +12,8 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
     @Modifying
     @Query("update NotificationEntity n set n.status = :status where n.id = :id")
     void updateStatus(@Param("id") long id, @Param("status") NotificationStatus status);
+
+
+    @Query("SELECT COUNT(n.id) > 0 FROM NotificationEntity n WHERE n.id = ?1 AND n.status != 'SENT'")
+    boolean existsByIdAndStatusNotSent(final Long id);
 }

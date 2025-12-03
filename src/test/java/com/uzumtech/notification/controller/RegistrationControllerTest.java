@@ -5,7 +5,7 @@ import com.uzumtech.notification.constants.TestConstants;
 import com.uzumtech.notification.dto.request.RegistrationRequest;
 import com.uzumtech.notification.dto.response.CommonResponse;
 import com.uzumtech.notification.dto.response.RegistrationResponse;
-import com.uzumtech.notification.exception.ErrorMessages;
+import com.uzumtech.notification.constant.ErrorMessages;
 import com.uzumtech.notification.exception.MerchantValidationException;
 import com.uzumtech.notification.repository.MerchantRepository;
 import com.uzumtech.notification.service.RegisterService;

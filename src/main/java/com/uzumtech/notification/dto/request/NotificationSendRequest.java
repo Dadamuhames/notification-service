@@ -5,7 +5,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
+@Builder
 public record NotificationSendRequest(
     @Valid ReceiverDto receiver,
     @NotNull(message = "notification type required") NotificationType type,

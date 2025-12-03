@@ -1,10 +1,11 @@
-package com.uzumtech.notification.service;
+package com.uzumtech.notification.scheduler;
 
 
 import com.uzumtech.notification.entity.PriceEntity;
 import com.uzumtech.notification.mapper.InvoiceMapper;
 import com.uzumtech.notification.repository.MerchantRepository;
 import com.uzumtech.notification.repository.projection.MerchantNotificationProjection;
+import com.uzumtech.notification.service.PriceService;
 import com.uzumtech.notification.service.impls.publisher.invoice.KafkaInvoicePublisherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

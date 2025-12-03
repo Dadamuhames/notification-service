@@ -12,4 +12,6 @@ public class TestConstants {
     public static final String RAW_PASSWORD = "password";
     public static final String ENCODED_PASSWORD = "passwordHash";
     public static final Long MERCHANT_ID = 1L;
+
+    public static final String PHONE = "998999999999";
 }

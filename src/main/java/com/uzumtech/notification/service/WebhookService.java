@@ -1,7 +1,7 @@
 package com.uzumtech.notification.service;
 
-import com.uzumtech.notification.entity.enums.NotificationStatus;
+import com.uzumtech.notification.dto.event.WebhookEvent;
 
 public interface WebhookService {
-    void sendTerminalStatus(final Long notificationId, final NotificationStatus status, final String webhook);
+    void sendTerminalStatus(final WebhookEvent event, final String webhook);
 }

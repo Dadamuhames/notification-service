@@ -1,5 +1,6 @@
 package com.uzumtech.notification.exception;
 
+import com.uzumtech.notification.constant.ErrorMessages;
 import lombok.Getter;
 
 @Getter

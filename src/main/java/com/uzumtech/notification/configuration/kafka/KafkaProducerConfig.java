@@ -3,14 +3,18 @@ package com.uzumtech.notification.configuration.kafka;
 import com.uzumtech.notification.configuration.property.KafkaProperties;
 import com.uzumtech.notification.dto.event.InvoiceEvent;
 import com.uzumtech.notification.dto.event.NotificationEvent;
+import com.uzumtech.notification.dto.event.WebhookEvent;
+import com.uzumtech.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.DelegatingByTypeSerializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
@@ -34,24 +38,18 @@ public class KafkaProducerConfig {
         return props;
     }
 
-    @Bean
-    public ProducerFactory<String, NotificationEvent> notificationProducerFactory() {
-        return new DefaultKafkaProducerFactory<>(producerConfigs());
-    }
 
     @Bean
-    public KafkaTemplate<String, NotificationEvent> kafkaNotificationTemplate() {
-        return new KafkaTemplate<>(notificationProducerFactory());
-    }
+    public KafkaTemplate<String, Object> kafkaTemplate() {
+        ProducerFactory<String, Object> factory = new DefaultKafkaProducerFactory<>(producerConfigs(), new StringSerializer(),
+            new DelegatingByTypeSerializer(
+                Map.of(
+                    byte[].class, new ByteArraySerializer(),
+                    NotificationEvent.class, new JsonSerializer<>(),
+                    InvoiceEvent.class, new JsonSerializer<>(),
+                    WebhookEvent.class, new JsonSerializer<>())
+            ));
 
-    @Bean
-    public ProducerFactory<String, InvoiceEvent> invoiceProducerFactory() {
-        return new DefaultKafkaProducerFactory<>(producerConfigs());
+        return new KafkaTemplate<>(factory);
     }
-
-    @Bean
-    public KafkaTemplate<String, InvoiceEvent> kafkaInvoiceTemplate() {
-        return new KafkaTemplate<>(invoiceProducerFactory());
-    }
-
 }

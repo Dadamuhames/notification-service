@@ -9,6 +9,6 @@ import com.uzumtech.notification.entity.enums.NotificationStatus;
 public interface NotificationService {
     CommonResponse<NotificationSendResponse> send(final NotificationSendRequest request, final MerchantEntity merchant);
 
-    void updateStatus(final Long notificationId, final Long merchantId, final NotificationStatus status);
+    void updateStatus(final Long notificationId, final NotificationStatus status);
 }
 

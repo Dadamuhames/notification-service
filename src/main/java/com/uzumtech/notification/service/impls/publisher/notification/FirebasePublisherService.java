@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class FirebasePublisherService implements NotificationPublisherService {
-    private final KafkaTemplate<String, NotificationEvent> kafkaNotificationTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
     public void publish(final NotificationEvent event) {
-        kafkaNotificationTemplate.send(KafkaConstants.PUSH_TOPIC, event);
+        kafkaTemplate.send(KafkaConstants.PUSH_TOPIC, event);
     }
 
     @Override
