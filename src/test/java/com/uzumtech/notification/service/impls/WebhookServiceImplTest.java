@@ -1,10 +1,10 @@
 package com.uzumtech.notification.service.impls;
 
-import com.uzumtech.notification.constant.WebhookRequestCodes;
+import com.uzumtech.notification.constant.enums.WebhookRequestCodes;
 import com.uzumtech.notification.constants.TestConstants;
 import com.uzumtech.notification.dto.event.WebhookEvent;
 import com.uzumtech.notification.dto.request.WebhookRequest;
-import com.uzumtech.notification.entity.enums.NotificationStatus;
+import com.uzumtech.notification.constant.enums.NotificationStatus;
 import com.uzumtech.notification.exception.kafka.nontransients.NonTransientException;
 import com.uzumtech.notification.exception.kafka.transients.TransientException;
 import com.uzumtech.notification.mapper.WebhookMapper;

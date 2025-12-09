@@ -1,7 +1,7 @@
 package com.uzumtech.notification.service.impls.consumer;
 
 import com.uzumtech.notification.constant.KafkaConstants;
-import com.uzumtech.notification.constant.KafkaErrorMessage;
+import com.uzumtech.notification.constant.enums.KafkaErrorMessage;
 import com.uzumtech.notification.dto.event.WebhookEvent;
 import com.uzumtech.notification.entity.MerchantEntity;
 import com.uzumtech.notification.exception.kafka.nontransients.MerchantIdInvalidException;

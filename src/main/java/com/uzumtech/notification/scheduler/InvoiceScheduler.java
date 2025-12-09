@@ -5,6 +5,7 @@ import com.uzumtech.notification.entity.PriceEntity;
 import com.uzumtech.notification.mapper.InvoiceMapper;
 import com.uzumtech.notification.repository.MerchantRepository;
 import com.uzumtech.notification.repository.projection.MerchantNotificationProjection;
+import com.uzumtech.notification.service.InvoiceService;
 import com.uzumtech.notification.service.PriceService;
 import com.uzumtech.notification.service.impls.publisher.invoice.KafkaInvoicePublisherService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class InvoiceScheduler {
     private final MerchantRepository merchantRepository;
     private final KafkaInvoicePublisherService invoicePublisherService;
     private final PriceService priceService;
+    private final InvoiceService invoiceService;
     private final InvoiceMapper invoiceMapper;
 
     @Scheduled(cron = "0 0 1 * * *")
@@ -40,5 +42,7 @@ public class InvoiceScheduler {
             var event = invoiceMapper.projectionToEvent(m, priceEntity.getPrice(), yesterday);
             invoicePublisherService.publish(event);
         });
+
+        invoiceService.storeInvoices(merchants, yesterday);
     }
 }

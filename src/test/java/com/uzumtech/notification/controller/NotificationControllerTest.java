@@ -7,7 +7,7 @@ import com.uzumtech.notification.dto.request.ReceiverDto;
 import com.uzumtech.notification.dto.response.CommonResponse;
 import com.uzumtech.notification.dto.response.NotificationSendResponse;
 import com.uzumtech.notification.entity.MerchantEntity;
-import com.uzumtech.notification.entity.enums.NotificationType;
+import com.uzumtech.notification.constant.enums.NotificationType;
 import com.uzumtech.notification.service.NotificationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

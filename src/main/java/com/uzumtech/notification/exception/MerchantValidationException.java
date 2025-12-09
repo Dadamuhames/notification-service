@@ -1,18 +1,13 @@
 package com.uzumtech.notification.exception;
 
-import com.uzumtech.notification.constant.ErrorMessages;
+import com.uzumtech.notification.constant.enums.Error;
+import com.uzumtech.notification.constant.enums.ErrorType;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
-public class MerchantValidationException extends RuntimeException {
-    private final ErrorMessages errorMessage;
-
-    public MerchantValidationException(String message, ErrorMessages errorMessage) {
-        super(message);
-        this.errorMessage = errorMessage;
-    }
-
-    public MerchantValidationException(ErrorMessages errorMessage) {
-        this.errorMessage = errorMessage;
+public class MerchantValidationException extends ApplicationException {
+    public MerchantValidationException(Error error) {
+        super(error.getCode(), error.getMessage(), ErrorType.VALIDATION, HttpStatus.BAD_REQUEST);
     }
 }

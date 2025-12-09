@@ -1,7 +1,7 @@
 package com.uzumtech.notification.service.impls.eventvalidation;
 
 import com.uzumtech.notification.dto.event.NotificationEvent;
-import com.uzumtech.notification.constant.KafkaErrorMessage;
+import com.uzumtech.notification.constant.enums.KafkaErrorMessage;
 import com.uzumtech.notification.exception.kafka.nontransients.EventDtoInvalidException;
 import com.uzumtech.notification.repository.NotificationRepository;
 import com.uzumtech.notification.service.EventValidationService;

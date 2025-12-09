@@ -2,18 +2,16 @@ package com.uzumtech.notification.service.impls;
 
 import com.uzumtech.notification.dto.event.WebhookEvent;
 import com.uzumtech.notification.dto.request.WebhookRequest;
-import com.uzumtech.notification.constant.KafkaErrorMessage;
+import com.uzumtech.notification.constant.enums.KafkaErrorMessage;
 import com.uzumtech.notification.exception.kafka.nontransients.WebhookRequestException;
 import com.uzumtech.notification.exception.kafka.transients.WebhookUnavailableException;
 import com.uzumtech.notification.mapper.WebhookMapper;
 import com.uzumtech.notification.service.WebhookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j

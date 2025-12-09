@@ -7,12 +7,11 @@ import com.uzumtech.notification.dto.response.CommonResponse;
 import com.uzumtech.notification.dto.response.NotificationSendResponse;
 import com.uzumtech.notification.entity.MerchantEntity;
 import com.uzumtech.notification.entity.NotificationEntity;
-import com.uzumtech.notification.entity.enums.NotificationStatus;
+import com.uzumtech.notification.constant.enums.NotificationStatus;
 import com.uzumtech.notification.mapper.NotificationMapper;
 import com.uzumtech.notification.repository.NotificationRepository;
 import com.uzumtech.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +36,6 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
 
-    // @Transactional(propagation = Propagation.REQUIRES_NEW)
     private void sendToPublisher(final NotificationEntity notification) {
         NotificationEvent event = notificationMapper.entityToEvent(notification);
         kafkaProducer.publish(event);

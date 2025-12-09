@@ -1,4 +1,4 @@
-package com.uzumtech.notification.entity.enums;
+package com.uzumtech.notification.constant.enums;
 
 public enum NotificationType {
     SMS,

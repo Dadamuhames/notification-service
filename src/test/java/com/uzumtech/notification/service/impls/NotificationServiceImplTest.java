@@ -7,7 +7,7 @@ import com.uzumtech.notification.dto.response.CommonResponse;
 import com.uzumtech.notification.dto.response.NotificationSendResponse;
 import com.uzumtech.notification.entity.MerchantEntity;
 import com.uzumtech.notification.entity.NotificationEntity;
-import com.uzumtech.notification.entity.enums.NotificationType;
+import com.uzumtech.notification.constant.enums.NotificationType;
 import com.uzumtech.notification.mapper.NotificationMapper;
 import com.uzumtech.notification.repository.NotificationRepository;
 import com.uzumtech.notification.service.impls.publisher.notification.KafkaNotificationPublisherService;

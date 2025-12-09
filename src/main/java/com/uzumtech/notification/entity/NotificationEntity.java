@@ -1,8 +1,8 @@
 package com.uzumtech.notification.entity;
 
 
-import com.uzumtech.notification.entity.enums.NotificationStatus;
-import com.uzumtech.notification.entity.enums.NotificationType;
+import com.uzumtech.notification.constant.enums.NotificationStatus;
+import com.uzumtech.notification.constant.enums.NotificationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

@@ -4,7 +4,7 @@ import com.uzumtech.notification.dto.request.RegistrationRequest;
 import com.uzumtech.notification.dto.response.CommonResponse;
 import com.uzumtech.notification.dto.response.RegistrationResponse;
 import com.uzumtech.notification.entity.MerchantEntity;
-import com.uzumtech.notification.constant.ErrorMessages;
+import com.uzumtech.notification.constant.enums.Error;
 import com.uzumtech.notification.exception.MerchantValidationException;
 import com.uzumtech.notification.mapper.MerchantMapper;
 import com.uzumtech.notification.repository.MerchantRepository;
@@ -43,7 +43,7 @@ public class RegisterServiceImpl implements RegisterService {
         boolean loginOrTaxNumberExists = merchantRepository.existsByLoginOrTaxNumber(request.login(), request.taxNumber());
 
         if (loginOrTaxNumberExists) {
-            throw new MerchantValidationException(ErrorMessages.LOGIN_OR_TAX_NUMBER_NOT_UNIQUE);
+            throw new MerchantValidationException(Error.LOGIN_OR_TAX_NUMBER_NOT_UNIQUE);
         }
     }
 }

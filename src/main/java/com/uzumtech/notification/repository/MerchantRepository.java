@@ -19,6 +19,8 @@ public interface MerchantRepository extends JpaRepository<MerchantEntity, Long> 
         "INNER JOIN m.notifications n " +
         "ON YEAR(n.createdAt) = :year AND MONTH(n.createdAt) = :month " +
         "AND n.status = 'SENT' AND n.type = 'SMS' " +
+        "LEFT JOIN InvoiceEntity i ON i.merchant.id = m.id AND i.invoiceYear = :year AND i.invoiceMonth = :month " +
+        "WHERE i.id IS NULL " +
         "GROUP BY m.id, m.name, m.email")
     List<MerchantNotificationProjection> findWithInvoicesForMonth(@Param("year") int year, @Param("month") int month);
 }

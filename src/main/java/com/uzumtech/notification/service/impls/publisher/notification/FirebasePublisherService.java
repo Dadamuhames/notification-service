@@ -1,7 +1,7 @@
 package com.uzumtech.notification.service.impls.publisher.notification;
 
 import com.uzumtech.notification.dto.event.NotificationEvent;
-import com.uzumtech.notification.entity.enums.NotificationType;
+import com.uzumtech.notification.constant.enums.NotificationType;
 import com.uzumtech.notification.service.NotificationPublisherService;
 import com.uzumtech.notification.constant.KafkaConstants;
 import lombok.RequiredArgsConstructor;

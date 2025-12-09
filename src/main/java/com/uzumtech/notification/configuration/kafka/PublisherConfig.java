@@ -1,6 +1,6 @@
 package com.uzumtech.notification.configuration.kafka;
 
-import com.uzumtech.notification.entity.enums.NotificationType;
+import com.uzumtech.notification.constant.enums.NotificationType;
 import com.uzumtech.notification.service.NotificationPublisherService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

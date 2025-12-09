@@ -1,8 +1,8 @@
 package com.uzumtech.notification.service.impls.publisher.notification;
 
 import com.uzumtech.notification.dto.event.NotificationEvent;
-import com.uzumtech.notification.entity.enums.NotificationType;
-import com.uzumtech.notification.constant.ErrorMessages;
+import com.uzumtech.notification.constant.enums.NotificationType;
+import com.uzumtech.notification.constant.enums.Error;
 import com.uzumtech.notification.exception.EventPublisherNotFoundException;
 import com.uzumtech.notification.service.KafkaEventPublisherService;
 import com.uzumtech.notification.service.NotificationPublisherService;
@@ -21,7 +21,7 @@ public class KafkaNotificationPublisherService implements KafkaEventPublisherSer
         NotificationPublisherService publisher = eventPublishers.get(event.type());
 
         if (publisher == null) {
-            throw new EventPublisherNotFoundException(ErrorMessages.EVENT_PUBLISHER_NOT_IMPLEMENTED);
+            throw new EventPublisherNotFoundException(Error.EVENT_PUBLISHER_NOT_IMPLEMENTED);
         }
 
         publisher.publish(event);
