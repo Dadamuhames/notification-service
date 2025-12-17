@@ -40,7 +40,7 @@ public class SecurityConfiguration {
     protected SecurityFilterChain filterChainAdmin(final HttpSecurity http) throws Exception {
         return http.securityMatcher("/api/**").authorizeHttpRequests(
                 auth ->
-                    auth.requestMatchers("/api/notifications/sending").authenticated()
+                    auth.requestMatchers("/api/notifications/sending", "/api/notifications").authenticated()
                         .requestMatchers("/api/notifications/registration").permitAll())
             .httpBasic(Customizer.withDefaults())
             .formLogin(AbstractHttpConfigurer::disable)

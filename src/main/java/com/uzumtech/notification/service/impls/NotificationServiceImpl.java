@@ -1,5 +1,6 @@
 package com.uzumtech.notification.service.impls;
 
+import com.uzumtech.notification.dto.response.NotificationResponse;
 import com.uzumtech.notification.service.impls.publisher.notification.KafkaNotificationPublisherService;
 import com.uzumtech.notification.dto.event.NotificationEvent;
 import com.uzumtech.notification.dto.request.NotificationSendRequest;
@@ -12,9 +13,15 @@ import com.uzumtech.notification.mapper.NotificationMapper;
 import com.uzumtech.notification.repository.NotificationRepository;
 import com.uzumtech.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -46,5 +53,13 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateStatus(final Long notificationId, final NotificationStatus status) {
         notificationRepository.updateStatus(notificationId, status);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<NotificationResponse> findAllByMerchant(final MerchantEntity merchant, final Pageable pageable) {
+        Page<NotificationEntity> notifications = notificationRepository.findAllByMerchantId(merchant.getId(), pageable);
+
+        return notifications.map(notificationMapper::entityToResponse);
     }
 }

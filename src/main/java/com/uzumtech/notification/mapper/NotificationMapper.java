@@ -3,6 +3,7 @@ package com.uzumtech.notification.mapper;
 
 import com.uzumtech.notification.dto.event.NotificationEvent;
 import com.uzumtech.notification.dto.request.NotificationSendRequest;
+import com.uzumtech.notification.dto.response.NotificationResponse;
 import com.uzumtech.notification.entity.MerchantEntity;
 import com.uzumtech.notification.entity.NotificationEntity;
 import org.mapstruct.Mapper;
@@ -16,6 +17,8 @@ public interface NotificationMapper {
     @Mapping(target = "merchantId", source = "entity.merchant.id")
     @Mapping(target = "merchantName", source = "entity.merchant.name")
     NotificationEvent entityToEvent(final NotificationEntity entity);
+
+    NotificationResponse entityToResponse(NotificationEntity entity);
 
 
     @Mapping(target = "id", ignore = true)
