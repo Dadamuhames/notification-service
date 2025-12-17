@@ -1,8 +1,8 @@
 package com.uzumtech.notification.entity;
 
 
-import com.uzumtech.notification.entity.enums.NotificationStatus;
-import com.uzumtech.notification.entity.enums.NotificationType;
+import com.uzumtech.notification.constant.enums.NotificationStatus;
+import com.uzumtech.notification.constant.enums.NotificationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,6 +12,7 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -34,7 +35,7 @@ import java.time.OffsetDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "notifications")
+@Table(name = "notifications", indexes = @Index(columnList = "merchant_id"))
 public class NotificationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

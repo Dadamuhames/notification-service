@@ -1,4 +1,4 @@
-package com.uzumtech.notification.constant;
+package com.uzumtech.notification.constant.enums;
 
 
 import lombok.Getter;

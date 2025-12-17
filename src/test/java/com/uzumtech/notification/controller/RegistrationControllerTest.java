@@ -5,7 +5,7 @@ import com.uzumtech.notification.constants.TestConstants;
 import com.uzumtech.notification.dto.request.RegistrationRequest;
 import com.uzumtech.notification.dto.response.CommonResponse;
 import com.uzumtech.notification.dto.response.RegistrationResponse;
-import com.uzumtech.notification.constant.ErrorMessages;
+import com.uzumtech.notification.constant.enums.Error;
 import com.uzumtech.notification.exception.MerchantValidationException;
 import com.uzumtech.notification.repository.MerchantRepository;
 import com.uzumtech.notification.service.RegisterService;
@@ -118,7 +118,7 @@ class RegistrationControllerTest {
         );
 
         when(registerService.register(request))
-            .thenThrow(new MerchantValidationException(ErrorMessages.LOGIN_OR_TAX_NUMBER_NOT_UNIQUE));
+            .thenThrow(new MerchantValidationException(Error.LOGIN_OR_TAX_NUMBER_NOT_UNIQUE));
 
         assertThat(mockMvcTester.post().contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsBytes(request))

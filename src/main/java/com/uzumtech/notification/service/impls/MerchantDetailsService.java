@@ -1,6 +1,6 @@
 package com.uzumtech.notification.service.impls;
 
-import com.uzumtech.notification.constant.ErrorMessages;
+import com.uzumtech.notification.constant.enums.Error;
 import com.uzumtech.notification.exception.LoginNotFoundException;
 import com.uzumtech.notification.repository.MerchantRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class MerchantDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return merchantRepository.findByLogin(username).orElseThrow(
-            () -> new LoginNotFoundException(ErrorMessages.USERNAME_NOT_FOUND)
+            () -> new LoginNotFoundException(Error.USERNAME_NOT_FOUND)
         );
     }
 }

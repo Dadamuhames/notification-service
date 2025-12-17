@@ -1,15 +1,14 @@
 package com.uzumtech.notification.exception;
 
 
-import com.uzumtech.notification.constant.ErrorMessages;
+import com.uzumtech.notification.constant.enums.Error;
+import com.uzumtech.notification.constant.enums.ErrorType;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
-public class LoginNotFoundException extends RuntimeException {
-    public ErrorMessages errorMessage;
-
-    public LoginNotFoundException(ErrorMessages errorMessage) {
-        this.errorMessage = errorMessage;
+public class LoginNotFoundException extends ApplicationException {
+    public LoginNotFoundException(Error error) {
+        super(error.getCode(), error.getMessage(), ErrorType.VALIDATION, HttpStatus.BAD_REQUEST);
     }
-
 }

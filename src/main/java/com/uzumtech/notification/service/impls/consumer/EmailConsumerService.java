@@ -1,10 +1,10 @@
 package com.uzumtech.notification.service.impls.consumer;
 
 import com.uzumtech.notification.constant.KafkaConstants;
-import com.uzumtech.notification.constant.WebhookRequestCodes;
+import com.uzumtech.notification.constant.enums.WebhookRequestCodes;
 import com.uzumtech.notification.dto.event.NotificationEvent;
 import com.uzumtech.notification.dto.event.WebhookEvent;
-import com.uzumtech.notification.entity.enums.NotificationStatus;
+import com.uzumtech.notification.constant.enums.NotificationStatus;
 import com.uzumtech.notification.exception.kafka.transients.EmailProviderUnavailableException;
 import com.uzumtech.notification.exception.kafka.transients.TransientException;
 import com.uzumtech.notification.service.ConsumerService;
@@ -23,7 +23,6 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.TransactionException;
 
 
 @Slf4j

@@ -1,7 +1,7 @@
 package com.uzumtech.notification.service.impls;
 
 import com.uzumtech.notification.entity.PriceEntity;
-import com.uzumtech.notification.constant.ErrorMessages;
+import com.uzumtech.notification.constant.enums.Error;
 import com.uzumtech.notification.exception.PriceNotFoundException;
 import com.uzumtech.notification.repository.PriceRepository;
 import com.uzumtech.notification.service.PriceService;
@@ -19,6 +19,6 @@ public class PriceServiceImpl implements PriceService {
     @Transactional(readOnly = true)
     public PriceEntity findCurrentPrice() {
         return priceRepository.findCurrentPrice().orElseThrow(
-            () -> new PriceNotFoundException(ErrorMessages.PRICE_NOT_FOUND));
+            () -> new PriceNotFoundException(Error.PRICE_NOT_FOUND));
     }
 }

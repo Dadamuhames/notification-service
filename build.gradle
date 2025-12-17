@@ -34,7 +34,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-
     implementation 'com.vladmihalcea:hibernate-types-60:2.21.1'
 
     // Mapper
@@ -59,9 +58,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail:4.0.0'
 
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:4.0.0'
-
-    implementation 'org.springframework:spring-webflux:7.0.1'
-
 
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'

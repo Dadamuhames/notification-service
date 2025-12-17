@@ -1,6 +1,6 @@
 package com.uzumtech.notification.dto.event;
 
-import com.uzumtech.notification.entity.enums.NotificationType;
+import com.uzumtech.notification.constant.enums.NotificationType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
