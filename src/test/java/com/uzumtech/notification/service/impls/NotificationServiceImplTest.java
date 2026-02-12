@@ -1,5 +1,6 @@
 package com.uzumtech.notification.service.impls;
 
+import com.uzumtech.notification.constant.enums.NotificationStatus;
 import com.uzumtech.notification.dto.event.NotificationEvent;
 import com.uzumtech.notification.dto.request.NotificationSendRequest;
 import com.uzumtech.notification.dto.request.ReceiverDto;
@@ -10,7 +11,7 @@ import com.uzumtech.notification.entity.NotificationEntity;
 import com.uzumtech.notification.constant.enums.NotificationType;
 import com.uzumtech.notification.mapper.NotificationMapper;
 import com.uzumtech.notification.repository.NotificationRepository;
-import com.uzumtech.notification.service.impls.publisher.notification.KafkaNotificationPublisherService;
+import com.uzumtech.notification.component.kafka.publisher.notification.KafkaNotificationPublisher;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +36,7 @@ class NotificationServiceImplTest {
 
 
     @Mock
-    KafkaNotificationPublisherService kafkaNotificationPublisherService;
+    KafkaNotificationPublisher kafkaNotificationPublisherService;
 
     @InjectMocks
     NotificationServiceImpl notificationService;
@@ -82,5 +83,17 @@ class NotificationServiceImplTest {
         verify(notificationMapper, times(1)).entityToEvent(savedEntity);
         verify(kafkaNotificationPublisherService, times(1)).publish(event);
         assertThat(notificationCaptor.getValue()).isSameAs(entity);
+    }
+
+    @Test
+    @DisplayName("updateStatus - Happy flow")
+    void updateStatus_HappyFlow() {
+        long notificationId = 5L;
+        NotificationStatus status = NotificationStatus.SENT;
+
+        notificationService.updateStatus(notificationId, status);
+
+        verify(notificationRepository, times(1)).updateStatus(notificationId, status);
+        verifyNoMoreInteractions(notificationRepository);
     }
 }

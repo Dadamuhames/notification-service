@@ -1,6 +1,8 @@
 package com.uzumtech.notification.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.uzumtech.notification.configuration.AppConfiguration;
+import com.uzumtech.notification.configuration.SecurityConfiguration;
 import com.uzumtech.notification.constants.TestConstants;
 import com.uzumtech.notification.dto.request.NotificationSendRequest;
 import com.uzumtech.notification.dto.request.ReceiverDto;
@@ -9,12 +11,13 @@ import com.uzumtech.notification.dto.response.NotificationSendResponse;
 import com.uzumtech.notification.entity.MerchantEntity;
 import com.uzumtech.notification.constant.enums.NotificationType;
 import com.uzumtech.notification.service.NotificationService;
+import com.uzumtech.notification.service.impls.MerchantDetailsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -28,15 +31,18 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(NotificationController.class)
+@Import({SecurityConfiguration.class, AppConfiguration.class})
 class NotificationControllerTest {
 
     @Autowired
-    MockMvcTester mockMvcTester;
+    private MockMvcTester mockMvcTester;
 
     @MockitoBean
-    NotificationService notificationService;
+    private MerchantDetailsService merchantDetailsService;
+
+    @MockitoBean
+    private NotificationService notificationService;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -77,7 +83,7 @@ class NotificationControllerTest {
                 .with(user(mockMerchant))
                 .content(objectMapper.writeValueAsBytes(validRequest))
                 .uri("/api/notifications/sending")
-        ).hasStatus(HttpStatus.OK).hasBodyTextEqualTo(objectMapper.writeValueAsString(response));
+        ).hasStatus(HttpStatus.OK).bodyJson().isEqualTo(objectMapper.writeValueAsString(response));
 
         verify(notificationService, times(1)).send(validRequest, mockMerchant);
     }

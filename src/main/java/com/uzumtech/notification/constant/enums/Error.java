@@ -14,6 +14,9 @@ public enum Error {
     METHOD_NOT_SUPPORTED_ERROR_CODE(10008, "Method not supported"),
     MISSING_REQUEST_HEADER_ERROR_CODE(10009, "Missing request header"),
 
+    HTTP_SERVICE_ERROR_CODE(10011, "Service error code"),
+    HTTP_CLIENT_ERROR_CODE(10012, "Client error code"),
+
     USERNAME_NOT_FOUND(11000, "login invalid"),
     LOGIN_OR_TAX_NUMBER_NOT_UNIQUE(12000, "login or taxNumber already in use"),
     EVENT_PUBLISHER_NOT_IMPLEMENTED(13000, "Event publisher not implemented"),

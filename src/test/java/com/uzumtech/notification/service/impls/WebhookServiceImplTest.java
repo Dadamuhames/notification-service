@@ -5,18 +5,24 @@ import com.uzumtech.notification.constants.TestConstants;
 import com.uzumtech.notification.dto.event.WebhookEvent;
 import com.uzumtech.notification.dto.request.WebhookRequest;
 import com.uzumtech.notification.constant.enums.NotificationStatus;
+import com.uzumtech.notification.exception.http.HttpClientException;
+import com.uzumtech.notification.exception.http.HttpServerException;
 import com.uzumtech.notification.exception.kafka.nontransients.NonTransientException;
+import com.uzumtech.notification.exception.kafka.nontransients.WebhookRequestException;
 import com.uzumtech.notification.exception.kafka.transients.TransientException;
+import com.uzumtech.notification.exception.kafka.transients.WebhookUnavailableException;
 import com.uzumtech.notification.mapper.WebhookMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -25,8 +31,8 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class WebhookServiceImplTest {
-    @Mock
-    private RestTemplate restTemplate;
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private RestClient restClient;
 
     @Mock
     private WebhookMapper webhookMapper;
@@ -54,13 +60,11 @@ class WebhookServiceImplTest {
         ResponseEntity<Void> response = ResponseEntity.ok().build();
 
         when(webhookMapper.eventToRequest(event)).thenReturn(request);
-        when(restTemplate.postForEntity(TestConstants.WEBHOOK, request, Void.class)).thenReturn(response);
-
+        when(restClient.post().uri(TestConstants.WEBHOOK).body(request).retrieve().toBodilessEntity()).thenReturn(response);
 
         webhookService.sendTerminalStatus(event, TestConstants.WEBHOOK);
 
         verify(webhookMapper).eventToRequest(event);
-        verify(restTemplate).postForEntity(TestConstants.WEBHOOK, request, Void.class);
     }
 
 
@@ -69,14 +73,11 @@ class WebhookServiceImplTest {
     void shouldThrowNonTransientException_when400BadRequest() {
         WebhookEvent event = createWebhookEvent();
         WebhookRequest request = createWebhookRequest();
-        ResponseEntity<Void> response = ResponseEntity.badRequest().build();
 
         when(webhookMapper.eventToRequest(event)).thenReturn(request);
-        when(restTemplate.postForEntity(TestConstants.WEBHOOK, request, Void.class)).thenThrow(HttpClientErrorException.class);
+        when(restClient.post().uri(TestConstants.WEBHOOK).body(request).retrieve().toBodilessEntity()).thenThrow(HttpClientException.class);
 
-        assertThatThrownBy(() -> webhookService.sendTerminalStatus(event, TestConstants.WEBHOOK)).isInstanceOf(NonTransientException.class);
-
-        verify(restTemplate).postForEntity(TestConstants.WEBHOOK, request, Void.class);
+        assertThatThrownBy(() -> webhookService.sendTerminalStatus(event, TestConstants.WEBHOOK)).isInstanceOf(WebhookRequestException.class);
     }
 
 
@@ -85,13 +86,10 @@ class WebhookServiceImplTest {
     void shouldThrowTransientException_when500ServerError() {
         WebhookEvent event = createWebhookEvent();
         WebhookRequest request = createWebhookRequest();
-        ResponseEntity<Void> response = ResponseEntity.internalServerError().build();
 
         when(webhookMapper.eventToRequest(event)).thenReturn(request);
-        when(restTemplate.postForEntity(TestConstants.WEBHOOK, request, Void.class)).thenThrow(HttpServerErrorException.class);
+        when(restClient.post().uri(TestConstants.WEBHOOK).body(request).retrieve().toBodilessEntity()).thenThrow(HttpServerException.class);
 
-        assertThatThrownBy(() -> webhookService.sendTerminalStatus(event, TestConstants.WEBHOOK)).isInstanceOf(TransientException.class);
-
-        verify(restTemplate).postForEntity(TestConstants.WEBHOOK, request, Void.class);
+        assertThatThrownBy(() -> webhookService.sendTerminalStatus(event, TestConstants.WEBHOOK)).isInstanceOf(WebhookUnavailableException.class);
     }
 }

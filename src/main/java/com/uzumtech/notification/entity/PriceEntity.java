@@ -1,6 +1,7 @@
 package com.uzumtech.notification.entity;
 
 
+import com.uzumtech.notification.entity.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.OffsetDateTime;
@@ -19,22 +21,15 @@ import java.time.OffsetDateTime;
 @Entity
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "price")
-public class PriceEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Table(name = "prices")
+public class PriceEntity extends BaseEntity {
 
     @Column(nullable = false)
     private Boolean isActive;
 
     @Column(nullable = false)
     private Long price;
-
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private OffsetDateTime createdAt;
 }
