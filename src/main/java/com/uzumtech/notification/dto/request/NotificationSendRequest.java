@@ -22,11 +22,11 @@ public record NotificationSendRequest(
         return type.equals(NotificationType.SMS) && receiver.phone() != null;
     }
 
-    public boolean isValidEmailReceiver() {
+    private boolean isValidEmailReceiver() {
         return type.equals(NotificationType.EMAIL) && receiver.email() != null;
     }
 
-    public boolean isValidPushReceiver() {
+    private boolean isValidPushReceiver() {
         return type.equals(NotificationType.PUSH) && receiver.firebaseToken() != null;
     }
 }

@@ -1,4 +1,17 @@
 services:
+  db:
+    image: postgres:16-alpine
+    container_name: postgres_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "notif_db"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root_password"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
   kafka:
     image: apache/kafka:3.7.0
     container_name: kafka-broker
@@ -9,7 +22,7 @@ services:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_LISTENERS: CONTROLLER://0.0.0.0:29093,BROKER://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
-      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka:29092,PLAINTEXT_HOST://kafka:29092
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:29093"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,BROKER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
@@ -17,8 +30,6 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
       CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
-
-
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -33,3 +44,33 @@ services:
       DYNAMIC_MODE: "true"
       AUTH_TYPE: disabled
     restart: unless-stopped
+
+  app:
+    build: .
+    container_name: notification_service
+    depends_on:
+      - db
+      - kafka
+      - kafka-ui
+    ports:
+      - "7070:7070"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/notif_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root_password
+
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_EMAIL: ${SMTP_EMAIL}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+
+      SHOW_SQL: true
+
+      PORT: 7070
+
+      JAVA_OPTS: "-Xms256m -Xmx512m"
+
+    restart: unless-stopped
+
+volumes:
+  postgres_data: { }

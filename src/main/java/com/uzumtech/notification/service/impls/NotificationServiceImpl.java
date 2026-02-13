@@ -1,7 +1,7 @@
 package com.uzumtech.notification.service.impls;
 
 import com.uzumtech.notification.dto.response.NotificationResponse;
-import com.uzumtech.notification.service.impls.publisher.notification.KafkaNotificationPublisherService;
+import com.uzumtech.notification.component.kafka.publisher.notification.KafkaNotificationPublisher;
 import com.uzumtech.notification.dto.event.NotificationEvent;
 import com.uzumtech.notification.dto.request.NotificationSendRequest;
 import com.uzumtech.notification.dto.response.CommonResponse;
@@ -15,31 +15,30 @@ import com.uzumtech.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PagedModel;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
     private final NotificationMapper notificationMapper;
-    private final KafkaNotificationPublisherService kafkaProducer;
+    private final KafkaNotificationPublisher kafkaProducer;
 
     @Override
-    @Transactional
     public CommonResponse<NotificationSendResponse> send(final NotificationSendRequest request, final MerchantEntity merchant) {
         NotificationEntity notification = notificationMapper.requestToNotification(request, merchant);
 
-        notification = notificationRepository.save(notification);
+        NotificationEntity savedNotification = saveNotification(notification);
 
-        sendToPublisher(notification);
+        sendToPublisher(savedNotification);
 
-        return CommonResponse.of(new NotificationSendResponse(notification.getId()));
+        return CommonResponse.of(new NotificationSendResponse(savedNotification.getId()));
+    }
+
+    @Transactional
+    private NotificationEntity saveNotification(final NotificationEntity entity) {
+        return notificationRepository.save(entity);
     }
 
 
@@ -50,7 +49,7 @@ public class NotificationServiceImpl implements NotificationService {
 
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void updateStatus(final Long notificationId, final NotificationStatus status) {
         notificationRepository.updateStatus(notificationId, status);
     }

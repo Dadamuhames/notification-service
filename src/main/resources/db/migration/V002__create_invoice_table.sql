@@ -7,6 +7,7 @@ CREATE TABLE invoices (
     --
     -- timestamps
     created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
     --
     -- relations
     CONSTRAINT fk_merchant FOREIGN KEY (merchant_id) REFERENCES merchants (id) ON DELETE RESTRICT,

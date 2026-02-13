@@ -1,5 +1,6 @@
 package com.uzumtech.notification.entity;
 
+import com.uzumtech.notification.entity.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,9 +11,11 @@ import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,13 +30,11 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "merchants", indexes = @Index(columnList = "login"))
-public class MerchantEntity implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class MerchantEntity extends BaseEntity implements UserDetails {
 
     @Column(nullable = false)
     private String name;
@@ -53,15 +54,8 @@ public class MerchantEntity implements UserDetails {
     @Column(nullable = false, length = 80)
     private String password;
 
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private OffsetDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(nullable = false)
-    private OffsetDateTime updatedAt;
-
     @OneToMany(mappedBy = "merchant", fetch = FetchType.LAZY)
+    @Builder.Default
     private Set<NotificationEntity> notifications = new HashSet<>();
 
     @Override

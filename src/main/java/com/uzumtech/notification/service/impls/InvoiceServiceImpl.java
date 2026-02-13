@@ -25,7 +25,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceMapper invoiceMapper;
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void storeInvoices(List<MerchantNotificationProjection> notifications, OffsetDateTime forDate) {
         List<InvoiceEntity> invoices = notifications.stream().map(n -> {
             MerchantEntity merchant = entityManager.getReference(MerchantEntity.class, n.getId());

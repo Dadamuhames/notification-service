@@ -1,19 +1,22 @@
 package com.uzumtech.notification.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.uzumtech.notification.configuration.AppConfiguration;
+import com.uzumtech.notification.configuration.SecurityConfiguration;
+import com.uzumtech.notification.constant.enums.Error;
 import com.uzumtech.notification.constants.TestConstants;
 import com.uzumtech.notification.dto.request.RegistrationRequest;
 import com.uzumtech.notification.dto.response.CommonResponse;
 import com.uzumtech.notification.dto.response.RegistrationResponse;
-import com.uzumtech.notification.constant.enums.Error;
 import com.uzumtech.notification.exception.MerchantValidationException;
 import com.uzumtech.notification.repository.MerchantRepository;
 import com.uzumtech.notification.service.RegisterService;
+import com.uzumtech.notification.service.impls.MerchantDetailsService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -27,12 +30,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(RegistrationController.class)
+@Import({SecurityConfiguration.class, AppConfiguration.class})
 class RegistrationControllerTest {
 
     @Autowired
     MockMvcTester mockMvcTester;
+
+    @MockitoBean
+    MerchantDetailsService merchantDetailsService;
 
     @MockitoBean
     RegisterService registerService;
@@ -62,7 +68,7 @@ class RegistrationControllerTest {
         assertThat(mockMvcTester.post().contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsBytes(request))
             .uri("/api/notifications/registration")).hasStatus(HttpStatus.CREATED)
-            .hasBodyTextEqualTo(objectMapper.writeValueAsString(response));
+            .bodyJson().isEqualTo(objectMapper.writeValueAsString(response));
 
         verify(registerService, times(1)).register(request);
     }

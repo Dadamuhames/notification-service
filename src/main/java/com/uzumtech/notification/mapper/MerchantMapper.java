@@ -14,5 +14,7 @@ public interface MerchantMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "request.companyName")
     @Mapping(target = "password", source = "encodedPassword")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     MerchantEntity requestToEntity(final RegistrationRequest request, final String encodedPassword);
 }
