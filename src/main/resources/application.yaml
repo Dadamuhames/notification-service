@@ -53,10 +53,10 @@ spring:
   # Email configuration
   mail:
     protocol: smtps
-    host: ${SMTP_HOST}
-    port: ${SMTP_PORT}
-    username: ${SMTP_EMAIL}
-    password: ${SMTP_PASSWORD}
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:8088}
+    username: ${SMTP_EMAIL:lo}
+    password: ${SMTP_PASSWORD:123}
     properties:
       mail:
         smtp:
